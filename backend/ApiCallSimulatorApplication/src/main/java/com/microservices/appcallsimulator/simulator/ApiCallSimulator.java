@@ -1,4 +1,4 @@
-package org.apicallsimulator.simulator;
+package com.microservices.appcallsimulator.simulator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

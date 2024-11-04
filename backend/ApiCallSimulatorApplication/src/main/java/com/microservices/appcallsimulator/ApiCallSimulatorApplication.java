@@ -1,7 +1,6 @@
-package org.apicallsimulator;
+package com.microservices.appcallsimulator;
 
-import org.apicallsimulator.simulator.ApiCallSimulator;
-import org.springframework.beans.factory.annotation.Value;
+import com.microservices.appcallsimulator.simulator.ApiCallSimulator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
