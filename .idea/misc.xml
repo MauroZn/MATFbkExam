@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/backend/Order/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/Catalog/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ShopGateway/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ApiCallSimulator/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ShopEurekaServer/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ConfigurationClient/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ConfigurationServer/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
