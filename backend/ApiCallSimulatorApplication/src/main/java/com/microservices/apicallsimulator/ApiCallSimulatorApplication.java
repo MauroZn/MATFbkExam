@@ -1,6 +1,6 @@
-package com.microservices.appcallsimulator;
+package com.microservices.apicallsimulator;
 
-import com.microservices.appcallsimulator.simulator.ApiCallSimulator;
+import com.microservices.apicallsimulator.services.ApiCallService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -16,7 +16,7 @@ public class ApiCallSimulatorApplication {
 
         String purchaseUrl = "http://localhost:9000/purchases";
 
-        ApiCallSimulator simulator = new ApiCallSimulator(catalogUrl, purchaseUrl);
+        ApiCallService simulator = new ApiCallService(catalogUrl, purchaseUrl);
         simulator.startSimulation(2, TimeUnit.HOURS);
     }
 }

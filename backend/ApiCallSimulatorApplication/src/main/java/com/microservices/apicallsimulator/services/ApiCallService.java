@@ -1,6 +1,5 @@
-package com.microservices.appcallsimulator.simulator;
+package com.microservices.apicallsimulator.services;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import com.microservices.order.models.dto.OrderRequest;
@@ -10,7 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
 
-public class ApiCallSimulator {
+public class ApiCallService {
 
     private final String catalogUrl;
     private final String purchaseUrl;
@@ -19,7 +18,7 @@ public class ApiCallSimulator {
     private final Random random;
 
 
-    public ApiCallSimulator(String catalogUrl, String purchaseUrl) {
+    public ApiCallService(String catalogUrl, String purchaseUrl) {
         this.catalogUrl = catalogUrl;
         this.purchaseUrl = purchaseUrl;
         this.restTemplate = new RestTemplate();
