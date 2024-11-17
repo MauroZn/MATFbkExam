@@ -29,7 +29,7 @@ public class ApiCallService {
 
     // Generate a random interval between calls
     private int randomInterval() {
-        return 15 + random.nextInt(30); // random interval between 15-30 seconds
+        return 1 + random.nextInt(5); // random interval between 15-30 seconds
     }
 
 
