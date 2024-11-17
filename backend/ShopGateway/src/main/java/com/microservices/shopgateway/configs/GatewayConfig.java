@@ -13,8 +13,7 @@ public class GatewayConfig {
         return builder.routes()
                 .route("catalog", r -> r.path("/products/**")
                         .filters(f -> f
-                                .circuitBreaker(cb ->
-                                        cb.setFallbackUri("forward:/fallback-catalog"))
+                                .circuitBreaker(cb -> cb.setFallbackUri("forward:/fallback-catalog"))
                                 .stripPrefix(1))
                         .uri("lb://catalog"))
 

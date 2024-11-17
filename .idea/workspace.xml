@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bb45500f-0b69-4468-bed7-2bc01fa9a8d7" name="Changes" comment="Changed catalogUrl and purchaseUrl to take them from application.properties.">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/ApiCallSimulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/ApiCallSimulatorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/services/ApiCallService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/services/ApiCallService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Order/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Order/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShopGateway/src/main/java/com/microservices/shopgateway/configs/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ShopGateway/src/main/java/com/microservices/shopgateway/configs/GatewayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/ShopGateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ShopGateway/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MauroZn&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MauroZn/MATFbkExam.git&quot;,
+    &quot;accountId&quot;: &quot;70761537-5696-4455-bc37-f375d22cd2a3&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2oOczJi3XuVMUOjd0UKTxOAcF6u" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.ApiCallSimulator.executor": "Debug",
+    "Spring Boot.Catalog.executor": "Run",
+    "Spring Boot.Client.executor": "Run",
+    "Spring Boot.Order.executor": "Run",
+    "Spring Boot.OrderApplication.executor": "Run",
+    "Spring Boot.Server.executor": "Run",
+    "Spring Boot.ShopEureka.executor": "Run",
+    "Spring Boot.ShopGateway.executor": "Run",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Mauro/Desktop/Projects/MATFbkExam/backend/ApiCallSimulatorApplication",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "Docker",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Mauro\Desktop\Projects\MATFbkExam\backend\ApiCallSimulatorApplication" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApiCallSimulator">
+    <configuration name="ApiCallSimulator" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ApiCallSimulatorApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservices.apicallsimulator.ApiCallSimulatorApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Catalog" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Catalog" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservices.catalog.CatalogApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Client" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ConfigurationClient" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservice.ConfigurationClient.ConfigurationClientApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Order" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Order" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservices.order.OrderApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Server" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ConfigurationServer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservice.configurationserver.ConfigurationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopEureka" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ShopEurekaServer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservices.ShopEurekaServer.ShopEurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShopGateway" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ShopGateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.microservices.shopgateway.ShopGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.Server" />
+      <item itemvalue="Spring Boot.Client" />
+      <item itemvalue="Spring Boot.Order" />
+      <item itemvalue="Spring Boot.Catalog" />
+      <item itemvalue="Spring Boot.ShopGateway" />
+      <item itemvalue="Spring Boot.ShopEureka" />
+      <item itemvalue="Spring Boot.ApiCallSimulator" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bb45500f-0b69-4468-bed7-2bc01fa9a8d7" name="Changes" comment="" />
+      <created>1730744323673</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730744323673</updated>
+      <workItem from="1730744324753" duration="1777000" />
+      <workItem from="1731144628399" duration="27000" />
+      <workItem from="1731144675993" duration="3226000" />
+      <workItem from="1731357223107" duration="238000" />
+      <workItem from="1731357580491" duration="1236000" />
+      <workItem from="1731836900601" duration="4618000" />
+    </task>
+    <task id="LOCAL-00001" summary="Uploading Project">
+      <option name="closed" value="true" />
+      <created>1730744967260</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730744967261</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Small editing.">
+      <option name="closed" value="true" />
+      <created>1730745300778</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730745300778</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Small editing.">
+      <option name="closed" value="true" />
+      <created>1730745549600</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730745549600</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changed some names for better understanding.">
+      <option name="closed" value="true" />
+      <created>1731145352491</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145352491</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added .gitignore for ApiCallSimulatorApplication">
+      <option name="closed" value="true" />
+      <created>1731145508088</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731145508088</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changed catalogUrl and purchaseUrl to take them from application.properties.">
+      <option name="closed" value="true" />
+      <created>1731357658015</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731357658015</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Uploading Project" />
+    <MESSAGE value="Small editing." />
+    <MESSAGE value="Changed some names for better understanding." />
+    <MESSAGE value="Added .gitignore for ApiCallSimulatorApplication" />
+    <MESSAGE value="Changed catalogUrl and purchaseUrl to take them from application.properties." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed catalogUrl and purchaseUrl to take them from application.properties." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
