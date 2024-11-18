@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb45500f-0b69-4468-bed7-2bc01fa9a8d7" name="Changes" comment="Changed catalogUrl and purchaseUrl to take them from application.properties.">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/ApiCallSimulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/ApiCallSimulatorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/services/ApiCallService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/java/com/microservices/apicallsimulator/services/ApiCallService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ApiCallSimulatorApplication/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Order/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Order/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ShopGateway/src/main/java/com/microservices/shopgateway/configs/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ShopGateway/src/main/java/com/microservices/shopgateway/configs/GatewayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/ShopGateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/ShopGateway/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="bb45500f-0b69-4468-bed7-2bc01fa9a8d7" name="Changes" comment="Created ApiLog and LoggingFilter to get all the data from the Api Calls.&#10;ApiLog class will be used to define the fields on MongoDB Logs.&#10;LoggingFilter logs API request details to MongoDB and the console. It uses ApiLogRepository to save logs in the MongoDB database." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -182,7 +170,7 @@
       <workItem from="1731144675993" duration="3226000" />
       <workItem from="1731357223107" duration="238000" />
       <workItem from="1731357580491" duration="1236000" />
-      <workItem from="1731836900601" duration="4618000" />
+      <workItem from="1731836900601" duration="5063000" />
     </task>
     <task id="LOCAL-00001" summary="Uploading Project">
       <option name="closed" value="true" />
@@ -232,7 +220,31 @@
       <option name="project" value="LOCAL" />
       <updated>1731357658015</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added .idea/ on all gitignore files.">
+      <option name="closed" value="true" />
+      <created>1731841663406</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731841663406</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Small edits on ApiCallSimulator.&#10;Now it's working properly.">
+      <option name="closed" value="true" />
+      <created>1731841747884</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731841747884</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Created ApiLog and LoggingFilter to get all the data from the Api Calls.&#10;ApiLog class will be used to define the fields on MongoDB Logs.&#10;LoggingFilter logs API request details to MongoDB and the console. It uses ApiLogRepository to save logs in the MongoDB database.">
+      <option name="closed" value="true" />
+      <created>1731841955037</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731841955037</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +267,10 @@
     <MESSAGE value="Changed some names for better understanding." />
     <MESSAGE value="Added .gitignore for ApiCallSimulatorApplication" />
     <MESSAGE value="Changed catalogUrl and purchaseUrl to take them from application.properties." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed catalogUrl and purchaseUrl to take them from application.properties." />
+    <MESSAGE value="Added .idea/ on all gitignore files." />
+    <MESSAGE value="Small edits on ApiCallSimulator.&#10;Now it's working properly." />
+    <MESSAGE value="Created ApiLog and LoggingFilter to get all the data from the Api Calls.&#10;ApiLog class will be used to define the fields on MongoDB Logs.&#10;LoggingFilter logs API request details to MongoDB and the console. It uses ApiLogRepository to save logs in the MongoDB database." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created ApiLog and LoggingFilter to get all the data from the Api Calls.&#10;ApiLog class will be used to define the fields on MongoDB Logs.&#10;LoggingFilter logs API request details to MongoDB and the console. It uses ApiLogRepository to save logs in the MongoDB database." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
