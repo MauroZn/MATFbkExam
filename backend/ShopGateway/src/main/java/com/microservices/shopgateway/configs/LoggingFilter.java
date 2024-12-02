@@ -68,7 +68,7 @@ public class LoggingFilter implements GlobalFilter, Ordered {
 
             // Save successful log to MongoDB
             ApiLog log = new ApiLog();
-            log.setRequestPath(requestPath);
+            log.setRequestType(getRequestType(requestPath));
             log.setStatusCode(exchange.getResponse().getStatusCode().value());
             log.setResponseTime(duration);
 
@@ -79,7 +79,7 @@ public class LoggingFilter implements GlobalFilter, Ordered {
 
             // Save error log to MongoDB
             ApiLog log = new ApiLog();
-            log.setRequestPath(requestPath);
+            log.setRequestType(getRequestType(requestPath));
             log.setStatusCode(500); // Assuming server error
             log.setResponseTime(duration);
 
@@ -91,6 +91,19 @@ public class LoggingFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return -1;
+    }
+
+    public String getRequestType(String requestPath) {
+
+        if (requestPath.equals("/products/1701")) {
+            return "Searched";
+        }
+        else if (requestPath.equals("/purchases/buy")) {
+            return "Sold";
+        }
+        else {
+            return "Unknown";
+        }
     }
 }
 
