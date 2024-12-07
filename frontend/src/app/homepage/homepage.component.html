@@ -1,0 +1,16 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Log Data Dashboard</h1>
+    <button
+      class="refresh-button"
+      (click)="refreshData()"
+      [disabled]="isLoading"
+    >
+      <span class="refresh-icon" [class.spinning]="isLoading">↻</span>
+      Refresh Data
+    </button>
+  </div>
+  <div class="chart-container">
+    <canvas id="logChart"></canvas>
+  </div>
+</div>
