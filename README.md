@@ -24,7 +24,11 @@
 <hr>
 
 <a id="project-request"></a>
-## Richiesta Progetto
+## Richiesta Progetto :scroll:
+
+> [!NOTE]
+> Richiesta esame MAT FBK 2024.
+
 ### Baseline
 - Progetto “shop” realizzato durante le lezioni che contiene due servizi, “shop-catalog” e
   “shop-purchase”.
@@ -55,10 +59,30 @@
 <hr>
 
 <a id="components"></a>
-## Componenti
+## Componenti :gear:
+
+> [!IMPORTANT]
+> Lista componenti e descrizione.
+
+### Panoramica delle Componenti:
+- [Configuration Server](#server): 
+  - Gestisce configurazioni centralizzate per tutti i microservizi, memorizzate in un repository Git.
+- [Configuration Client](#client): 
+  - Si connette al server di configurazione per ottenere parametri di runtime, aggiornabili dinamicamente.
+- [Eureka Server](#eureka-server): 
+  - Fornisce il service discovery, consentendo ai microservizi di individuarsi reciprocamente senza conoscere in anticipo indirizzi o porte.
+- [Gateway](#gateway): 
+  - Punto di ingresso centrale per tutte le richieste client, responsabile del routing, resilienza (con Resilience4J), logging e gestione dei fallback.
+- [Order](#order): 
+  - Microservizio per la gestione degli ordini, con integrazione con il servizio Catalog per la disponibilità dei prodotti.
+- [Catalog](#catalog): 
+  - Microservizio per la gestione dei prodotti, inclusi elenchi, creazione, aggiornamento e ricerca avanzata.
+- [ApiCallSimulator](#api-call-simulator): 
+  - Simula richieste al Catalog e agli ordini per testare il comportamento dei microservizi sotto carico.
+
 
 <a id="server"></a>
-### Configuration Server
+## Configuration Server :triangular_flag_on_post:
 Il ConfigurationServer è un'applicazione che fornisce la configurazione centralizzata per altri microservizi. Questa configurazione viene recuperata da un repository Git e può includere proprietà come URL, credenziali e parametri personalizzati.
 
 #### Codice e Funzionalità Principali
@@ -81,7 +105,7 @@ I microservizi client si connettono a questo server per recuperare le loro confi
 <hr>
 
 <a id="client"></a>
-### Configuration Client
+## Configuration Client :triangular_flag_on_post:
 Il ConfigurationClient è un'applicazione che si collega al ConfigurationServer per ottenere configurazioni centralizzate. Consente di accedere dinamicamente ai valori delle configurazioni memorizzati nel server Config.
 
 #### Codice e Funzionalità Principali
@@ -116,7 +140,8 @@ Usando l'endpoint /actuator/refresh, le configurazioni vengono ricaricate dinami
 <hr>
 
 <a id="eureka-server"></a>
-### Eureka Server
+
+## Eureka Server :triangular_flag_on_post:
 Il ShopEurekaServer è un'applicazione Spring Boot che funge da Eureka Server, una componente chiave di Spring Cloud Netflix per il servizio di Service Discovery. 
 Gestisce la registrazione e il monitoraggio dei microservizi, consentendo loro di comunicare tra loro dinamicamente senza conoscere in anticipo le rispettive posizioni (indirizzi IP o porte).
 
@@ -147,7 +172,7 @@ Gestisce la registrazione e il monitoraggio dei microservizi, consentendo loro d
 <hr>
 
 <a id="gateway"></a>
-### Gateway
+## Gateway :triangular_flag_on_post:
 Il ShopGateway è un'applicazione Spring Cloud Gateway che funge da punto centrale di ingresso per tutte le richieste client verso i microservizi. 
 Fornisce funzionalità di routing, resilienza, logging, e gestione del traffico.
 
@@ -225,7 +250,7 @@ Questo filtro globale consente di registrare i dettagli delle richieste e delle 
 - **Registrazione dei log:**
     - Registra il percorso della richiesta in ingresso e la durata dell'elaborazione.
     - Registra eventuali errori, includendo il percorso e il messaggio di errore.
-- Integrazione con MongoDB:
+- **Integrazione con MongoDB:**
   - Salva i log nella collezione logs di MongoDB.
   - Ogni log include:
     - Il percorso della richiesta.
@@ -240,7 +265,7 @@ Questo filtro globale consente di registrare i dettagli delle richieste e delle 
 Questa classe rappresenta il modello per i log salvati in MongoDB.
 #### Dettagli:
 - Annotata con @Document, specifica che i documenti saranno memorizzati nella collezione logs.
-- Campi principali:
+- **Campi principali:**
   - id: Identificativo univoco del log.
   - requestPath: Il percorso della richiesta HTTP.
   - statusCode: Codice di stato della risposta.
@@ -258,21 +283,210 @@ Questa interfaccia è un repository MongoDB per la gestione dei documenti di tip
 <hr>
 
 <a id="order"></a>
-### Order
+## Order :triangular_flag_on_post:
+
+### Flusso Generale
+- Un utente fa una richiesta per acquistare un prodotto tramite il OrderController.
+- OrderServiceImpl riceve la richiesta e verifica la disponibilità del prodotto tramite Feign.
+- Se il prodotto è disponibile, crea un nuovo ordine, lo salva nel database e aggiorna la disponibilità del prodotto nel servizio Catalog.
+- Se qualcosa va storto durante la comunicazione con Catalog (ad esempio, il servizio è inaffidabile), il sistema si affida al circuit breaker per prevenire ulteriori errori e gestire il fallimento in modo controllato.
+
+### 1. Configurazione di Order
+Il modulo Order è configurato per gestire gli ordini degli utenti, interagendo con il servizio Catalog per verificare la disponibilità dei prodotti e aggiornare le quantità acquistate.
+
+    OrderConfig
+- Questa classe configura un RestTemplate che permette di fare chiamate HTTP ad altri microservizi (ad esempio, per interagire con il servizio Catalog).
+- Load Balancing: Grazie all'annotazione @LoadBalanced, ogni richiesta inviata tramite il RestTemplate sarà automaticamente bilanciata tra le istanze disponibili dei microservizi.
+        
+
+        Resilience4JConfig
+- Configura un circuit breaker e un time limiter per migliorare la resilienza delle chiamate verso i microservizi esterni (ad esempio, Catalog).
+- Circuit Breaker: Gestisce i guasti in modo che, se una parte del sistema smette di rispondere correttamente, le chiamate future vengano interrotte, evitando ulteriori errori.
+- Time Limiter: Impone un timeout nelle chiamate ai servizi esterni, garantendo che non ci siano chiamate che impiegano troppo tempo.
+
+### 2.Controller degli Ordini
+    OrderController
+- **Questo controller gestisce le richieste HTTP relative agli ordini degli utenti.**
+  - Get User Purchases (/purchases/{userId}): Restituisce la lista degli ordini di un determinato utente.
+  - Get Purchase (/purchases/{userId}/{id}): Restituisce un ordine specifico dato l'ID dell'utente e dell'ordine.
+  - Post Buy (/purchases/buy): Consente a un utente di acquistare un prodotto. La richiesta viene ricevuta come un OrderRequest contenente l'ID dell'utente, la quantità e l'ID del prodotto.
+
+Discovery Client: Anche se non attivo (commentato), il controller fa uso di DiscoveryClient per interagire con il servizio Catalog tramite il meccanismo di Service Discovery di Spring Cloud (Eureka).
+
+### 3.Modelli di Dati
+    OrderRequest
+Rappresenta la richiesta che l'utente invia per acquistare un prodotto. Contiene l'ID dell'utente, la quantità e l'ID del prodotto.
+    
+    Order
+Rappresenta un ordine effettivo salvato nel database. Include informazioni come l'ID dell'ordine, l'ID del prodotto, il titolo del prodotto, la categoria, la quantità acquistata, il prezzo totale e l'ID dell'utente.
+
+    Product (modello condiviso)
+Rappresenta un prodotto del catalogo. Include attributi come ID, codice, titolo, categoria, descrizione, prezzo e disponibilità.
+
+### 4.Repository
+   
+    OrderRepository
+Interfaccia che estende MongoRepository per fornire metodi per interagire con il database MongoDB e recuperare gli ordini. Include metodi per trovare ordini in base all'ID dell'utente o una combinazione dell'ID utente e ID ordine.
+
+### 5.Servizi
+    OrderService (Interfaccia)
+**Definisce i metodi necessari per la gestione degli ordini.** Include:
+- getUserPurchases: Restituisce gli ordini di un utente.
+- getPurchase: Restituisce un ordine specifico dato l'ID dell'utente e dell'ordine.
+- buy: Consente di acquistare un prodotto, verificando la disponibilità e aggiornando il catalogo.
 
 
+    OrderServiceImpl 
+- Implementazione del servizio OrderService. Gestisce la logica effettiva dietro le operazioni sugli ordini:
+  - Verifica la disponibilità del prodotto tramite una chiamata al servizio Catalog usando Feign (per evitare di scrivere manualmente la logica delle richieste HTTP).
+  - Se il prodotto è disponibile, crea un nuovo ordine, lo salva nel database e aggiorna la disponibilità del prodotto nel catalogo.
+- Circuit Breaker: Se la comunicazione con Catalog fallisce, il servizio può interrompere automaticamente le chiamate grazie al meccanismo di circuit breaker configurato precedentemente.
+- Feign: Utilizza Feign per semplificare le chiamate a Catalog. Le richieste vengono inviate a Catalog per ottenere i dettagli del prodotto e aggiornare la sua disponibilità.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>
 
 <a id="catalog"></a>
-### Catalog
+## Catalog :triangular_flag_on_post:
+
+Il microservizio Catalog è responsabile della gestione dei prodotti. Fornisce endpoint per elencare, creare, cercare e aggiornare le informazioni sui prodotti, incluso il loro livello di disponibilità. È collegato a un database MongoDB e utilizza Eureka per la registrazione e la scoperta dei servizi.
+### Flusso Generale
+**Elenco dei Prodotti:**
+- Un client invia una richiesta GET /.
+- ProductController chiama ProductService.getProducts(), che utilizza ProductRepository.findAll() per recuperare tutti i prodotti dal database.
+
+**Creazione di un Prodotto:**
+- Un client invia una richiesta POST / con un prodotto come payload JSON.
+- ProductController chiama ProductService.createProduct(), che salva il prodotto nel database tramite ProductRepository.save().
+
+**Aggiornamento della Disponibilità:**
+- Un client invia una richiesta PUT /{id}/availability/{value}.
+- ProductController chiama ProductService.updateAvailability(), che cerca il prodotto tramite il repository, aggiorna il campo availability, e lo salva.
+
+**Ricerca Avanzata:**
+- Le richieste GET /category/{category} e GET /code/{code} permettono di cercare prodotti specifici in base a categoria o codice, utilizzando metodi predefiniti del repository.
+
+### 1. Configurazione del Microservizio
+    CatalogApplication
+**Classe principale del microservizio, dove viene avviata l'applicazione Spring Boot.**
+   - @EnableDiscoveryClient: Permette al microservizio di registrarsi con Eureka per essere individuato da altri servizi.
+   - Configura un bean per il client MongoDB con il supporto al tracing tramite Brave, che consente di tracciare le operazioni MongoDB per migliorare l'osservabilità.
+
+### 2. Controller dei Prodotti
+    ProductController
+**Espone gli endpoint REST per interagire con i prodotti. Gli endpoint includono:**
+   - GET /: Restituisce l'elenco di tutti i prodotti.
+   - GET /{id}: Restituisce un prodotto specifico dato il suo ID.
+   - GET /category/{category}: Cerca i prodotti in base alla categoria.
+   - GET /code/{code}: Cerca un prodotto in base al suo codice univoco.
+   - POST /: Crea un nuovo prodotto.
+   - PUT /{id}/availability/{value}: Aggiorna la disponibilità di un prodotto dato il suo ID e il nuovo valore.
+### 4. Repository
+    ProductRepository
+**Interfaccia che estende MongoRepository per interagire con il database MongoDB.**
+   - Metodi principali:
+     - findByCode(String code): Cerca un prodotto in base al suo codice.
+     - findByCategory(String category): Cerca prodotti che appartengono a una specifica categoria.
+### 5. Servizi
+    ProductService (Interfaccia)
+**Definisce i metodi necessari per la gestione dei prodotti, tra cui:**
+- Elencare i prodotti.
+- Cercare un prodotto per ID o codice.
+- Creare un nuovo prodotto.
+- Aggiornare la disponibilità di un prodotto.
+
+
+    ProductServiceImpl
+**Implementazione del servizio ProductService. Gestisce la logica aziendale per i prodotti.**
+ Metodi principali:
+ - getProducts: Restituisce tutti i prodotti presenti nel catalogo.
+ - getProductById: Cerca un prodotto nel catalogo dato il suo ID.
+ - getProductByCode: Cerca un prodotto in base al suo codice.
+ - getProductsByCategory: Restituisce i prodotti appartenenti a una categoria specifica.
+ - createProduct: Salva un nuovo prodotto nel database.
+ - updateAvailability: Modifica la disponibilità di un prodotto. Se il prodotto non esiste, lancia un'eccezione.
+### 6. Configurazione del Database
+   #### MongoDB
+   Utilizza MongoDB come database per memorizzare i prodotti.
+   - La configurazione avviene tramite application.properties:
+     - URI: Il collegamento al database è configurato tramite spring.data.mongodb.uri, che include credenziali per il database remoto.
+     - Tracing: Con il supporto di Brave, le operazioni MongoDB vengono tracciate per migliorare l'osservabilità.
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>
 
 <a id="api-call-simulator"></a>
-### Api Call Simulator
+## Api Call Simulator :triangular_flag_on_post:
+**Il microservizio ApiCallSimulator simula richieste API verso due altri microservizi:**
+- Catalog: Per simulare ricerche di prodotti.
+- Order (o Purchase): Per simulare ordini di acquisto.<br>
+L'obiettivo è testare il comportamento di questi servizi e monitorarne la risposta sotto carico simulato. Le chiamate vengono generate a intervalli casuali e possono essere interrotte dopo un certo periodo di tempo.
+
+#### Modifica della durata della simulazione
+La durata della simulazione può essere configurata modificando il parametro nel metodo startSimulation:
+    
+    simulator.startSimulation(1, TimeUnit.MINUTES);
+
+### Flusso Generale
+- Avvio del microservizio:
+  - Quando l'applicazione viene avviata, il metodo CommandLineRunner.run crea un'istanza di ApiCallService.
+  - La simulazione delle chiamate API inizia immediatamente e dura 1 minuto (configurabile).
+  
+- Simulazione delle richieste:
+  - Catalog:
+  Effettua una richiesta GET al servizio Catalog utilizzando un ID prodotto predefinito (1701).
+  Stampa lo stato della risposta (es. 200 OK).
+  - Order:
+  Crea un oggetto OrderRequest con dettagli predefiniti sull'acquisto.
+  Invia una richiesta POST al servizio Order per simulare una transazione.
+  Stampa lo stato della risposta (es. 201 Created).
+  
+- Intervalli casuali:
+  - Ogni chiamata API viene eseguita con un intervallo casuale tra 1 e 5 secondi, evitando richieste troppo ravvicinate.
+
+- Arresto della simulazione:
+  - Dopo il periodo definito (es. 1 minuto), tutte le richieste pianificate vengono fermate, e il simulatore viene arrestato.
+
+### Servizio Principale
+    ApiCallService
+- Inizializzata con:
+    - catalogUrl: URL per le chiamate al servizio Catalog.
+    - purchaseUrl: URL per le chiamate al servizio Order.
+    - RestTemplate: Per effettuare le richieste HTTP.
+    - ScheduledExecutorService: Per pianificare l'esecuzione periodica delle chiamate API.
+    - Random: Per generare intervalli casuali tra le chiamate.
+
+#### Funzionalità principali:
+
+1. Simulazione di una ricerca nel catalogo:
+    - Invoca un endpoint di Catalog tramite una richiesta GET.
+    - Esempio: GET /products/1701, dove 1701 è l'ID di un prodotto.
+
+2. Simulazione di un acquisto:
+  - Invoca un endpoint di Order tramite una richiesta POST.
+  - Esempio:
+    - Endpoint: /purchases/buy.
+    - Payload: Un oggetto JSON che rappresenta un ordine, contenente:
+    - userId: ID dell'utente che effettua l'acquisto.
+    - count: Numero di prodotti da acquistare.
+    - productId: ID del prodotto da acquistare.
+
+3. Avvio della simulazione:
+- Metodo startSimulation:
+  - Avvia due tipi di attività schedulate:
+    1. Ricerca nel catalogo: Eseguita a intervalli casuali.
+    2. Acquisto di prodotti: Eseguito a intervalli casuali.
+- La simulazione termina automaticamente dopo un periodo definito.
+
+4. Arresto della simulazione:
+- Metodo stopSimulation:
+  - Arresta il pianificatore (Scheduler) e ferma tutte le attività in corso.
+
+#### Punti chiave del codice:
+- Gestione degli errori: Entrambi i metodi di simulazione (simulateCatalogSearch e simulatePurchase) catturano eventuali eccezioni e stampano un messaggio di errore nel log.
+- Pianificazione parallela: Utilizza un pool di thread per eseguire simultaneamente richieste di ricerca e acquisto.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>
