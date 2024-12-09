@@ -9,7 +9,8 @@
 
 ## Indice
 1. [Richiesta Progetto](#project-request)
-2. [Componenti](#components)
+2. [Versioni (Da avere o installare) (**IMPORTANT!**)](#versions)
+3. [Componenti](#components)
     - [Server](#server)
     - [Client](#client)
     - [Eureka Server](#eureka-server)
@@ -17,9 +18,9 @@
         - [Logs (**NEW!**)](#new-part-gateway)
     - [Order](#order)
     - [Catalog](#catalog)
-    - [ApiCallSimulator(**NEW!**) ](#api-call-simulator)
-3. [Collaboratori](#contributors)
-4. [Docker e Kubernetes](#docker-kubernetes)
+    - [ApiCallSimulator (**NEW!**) ](#api-call-simulator)
+4. [Collaboratori](#contributors)
+5. [Docker e Kubernetes](#docker-kubernetes)
 
 
 <hr>
@@ -57,6 +58,57 @@
   o Distribuzione del tempo di risposta per vari intervalli per diversi API
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+<hr>
+
+<a id="versions"></a>
+> [!CAUTION]
+> **Versioni da installare (specifiche non versioni più nuove)** <br>
+*Se avete versioni più nuove potete o fare un downgrade ad una versione precedente o impostare di default la versione più vecchia (scritta qua sotto).* <br>
+
+**Le seguenti guide sono per ***Linux***** <br>
+*SE usate **Windows** ci sono guide e **comandi diversi**, in caso cercate online per le versioni corrette (Occhio alle versioni che installate come scritto sopra)*<br>
+
+**1. BACKEND**
+- **Java 21**
+    - https://www.oracle.com/it/java/technologies/downloads/#jdk21-linux
+- **Maven**
+#### 
+    sudo apt-get install maven
+
+**2. FRONTEND:**
+- **Node Versione 18.20.4**
+    - Download: [NodeJs V18.20.4](https://nodejs.org/dist/v18.20.4/node-v18.20.4-linux-x64.tar.xz)
+    - Guida:
+      - Step 1: Update System Repositories
+        ####
+            sudo apt update
+
+      - Step 2: Install the package xz-utils
+        ####
+            sudo apt install xz-utils
+
+      - Step 3: To Extract the .tar.xz file
+        ####
+            sudo tar -xvf node-v18.20.4-linux-x64.tar.xz
+
+      - Step 4:
+        ####
+            sudo cp -r node-v18.20.4-linux-x64/{bin,include,lib,share} /usr/
+
+      - Step 5: Check the node version
+        ####
+            node --version
+
+- **Angular Versione 14.2.13** <br>
+    - Installazione Angular ([Guida](https://www.npmjs.com/package/@angular/cli/v/14.2.13)):
+      #### 
+            npm i @angular/cli@14.2.13
+    - Start Angular Frontend:
+      ####
+            ng serve
+
+*Ve lo dirà sul terminale ma nel dubbio per vedere la homepage del progetto dovrete andare su localhost:4200*
+
 <hr>
 
 <a id="components"></a>
