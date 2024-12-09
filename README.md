@@ -14,9 +14,10 @@
     - [Client](#client)
     - [Eureka Server](#eureka-server)
     - [Gateway](#gateway)
+        - [Logs (**NEW!**)](#new-part-gateway)
     - [Order](#order)
     - [Catalog](#catalog)
-    - [ApiCallSimulator](#api-call-simulator)
+    - [ApiCallSimulator(**NEW!**) ](#api-call-simulator)
 3. [Collaboratori](#contributors)
 4. [Docker e Kubernetes](#docker-kubernetes)
 
@@ -279,6 +280,26 @@ Questa interfaccia è un repository MongoDB per la gestione dei documenti di tip
 - Estende MongoRepository, fornendo operazioni CRUD pronte all'uso.
 - Consente la persistenza e il recupero dei log salvati.
 
+### Controller
+    LogController
+Lo scopo principale è gestire la restituzione dei log delle API memorizzati in MongoDB.<br>
+Il controller è progettato per supportare il monitoraggio delle richieste API effettuate attraverso il gateway. Questa funzionalità è cruciale per la raccolta di metriche, debugging e auditing. Il frontend può consumare i dati esposti da /api/logs e visualizzarli in modo utile (ad esempio, rappresentazioni grafiche o dettagli per richieste individuali).
+#### Analisi del Codice
+
+1. Annotazioni principali:
+    - @RestController: Marca questa classe come un controller Spring per API REST. I metodi all'interno restituiscono direttamente dati (tipicamente in formato JSON).
+    - @RequestMapping("/api"): Specifica che tutti gli endpoint definiti in questa classe avranno un prefisso comune /api.
+    - @CrossOrigin(origins = "http://localhost:4200"): Abilita le richieste Cross-Origin (CORS) da un'origine specifica, in questo caso il frontend in esecuzione su http://localhost:4200.
+2. Dipendenza di MongoTemplate:
+   - La classe usa MongoTemplate (autowired) per interagire con il database MongoDB.
+   - **MongoTemplate** è un'astrazione fornita da Spring Data per eseguire operazioni di lettura/scrittura in MongoDB.
+3. Endpoint /logs:
+   - Annotato con @GetMapping("/logs"): Esso risponde a richieste HTTP GET sull'endpoint /api/logs.
+   - Metodo getLogs(): Usa MongoTemplate.findAll(ApiLog.class) per recuperare tutti i documenti della collezione MongoDB che corrispondono alla classe modello ApiLog.
+   - Ritorna una lista di oggetti ApiLog, che verranno automaticamente convertiti in JSON per essere restituiti al client.
+4. Scopo principale:
+   - Restituisce tutti i log registrati (oggetti ApiLog) nel database MongoDB.
+   - Abilita il frontend (ad esempio un'app Angular, dato l'indirizzo localhost:4200) a consumare questi dati per visualizzarli, ad esempio, in tabelle o grafici.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 <hr>
 
