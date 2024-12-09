@@ -232,7 +232,14 @@ Fornisce funzionalità di routing, resilienza, logging, e gestione del traffico.
 
 ### 1. Configurazioni
     Resilience4JConfig
-Questo file configura la resilienza delle chiamate tramite Resilience4J.
+Questa classe Resilience4JConfig serve per configurare Resilience4J, una libreria che offre strumenti per gestire in modo tollerante i guasti nei sistemi distribuiti. <br>
+Lo stiamo usando con Spring Cloud Gateway per gestire la resilienza nelle chiamate API, ad esempio implementando il circuit breaking e il fallback. <br>
+
+#### Circuit breaking:
+Il circuit breaking è un pattern di progettazione che viene utilizzato per proteggere i sistemi distribuiti da sovraccarichi o errori a cascata causati da dipendenze che non funzionano correttamente.
+
+#### Fallback
+Il fallback è una strategia per gestire i guasti fornendo una risposta alternativa quando un servizio non è disponibile o funziona male.
 
 - **Circuit Breaker Config:**
   - failureRateThreshold(50): Se il 50% delle richieste fallisce, il circuito si apre.
