@@ -251,6 +251,22 @@ Il fallback è una strategia per gestire i guasti fornendo una risposta alternat
   
 Questo garantisce che il gateway sia in grado di gestire errori temporanei nei servizi sottostanti e di proteggere i clienti da ritardi prolungati.
 
+    GatewayConfig
+Questo file di configurazione definisce le regole di routing e i filtri per l'applicazione Spring Cloud Gateway.
+#### Caratteristiche principali:
+- **Definizioni di rotte:**
+    - **catalog:** Reindirizza le richieste con il percorso /products/** al servizio catalog.
+        - Aggiunge un circuit breaker con un URI di fallback (/fallback-catalog).
+        - Utilizza il filtro stripPrefix per rimuovere il primo segmento del percorso URI.
+    - **order:** Reindirizza le richieste con il percorso /purchases/** al servizio order.
+        - Applica il filtro stripPrefix.
+
+- **Load Balancing:**
+    - Le rotte utilizzano URI con prefisso lb://, permettendo l'integrazione con Eureka per il service discovery.
+
+
+
+
 #### Funzionalità
 - Integra Resilience4J per il controllo di resilienza.
 - Migliora la tolleranza ai guasti dei microservizi downstream.
@@ -290,20 +306,6 @@ Gestisce i fallback per i servizi non disponibili.
 > Novità rispetto al codice base.
 
 ### Configurazioni
-    GatewayConfig
-Questo file di configurazione definisce le regole di routing e i filtri per l'applicazione Spring Cloud Gateway.
-#### Caratteristiche principali:
-- **Definizioni di rotte:**
-  - **catalog:** Reindirizza le richieste con il percorso /products/** al servizio catalog.
-    - Aggiunge un circuit breaker con un URI di fallback (/fallback-catalog).
-    - Utilizza il filtro stripPrefix per rimuovere il primo segmento del percorso URI.
-  - **order:** Reindirizza le richieste con il percorso /purchases/** al servizio order.
-    - Applica il filtro stripPrefix.
-
-- **Load Balancing:**
-  - Le rotte utilizzano URI con prefisso lb://, permettendo l'integrazione con Eureka per il service discovery.
-
-
     LoggingFilter
 
 Questo filtro globale consente di registrare i dettagli delle richieste e delle risposte, con l'ulteriore funzionalità di salvare i log in un database MongoDB.
