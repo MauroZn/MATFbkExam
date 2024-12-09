@@ -8,24 +8,24 @@ import { Chart } from 'chart.js';
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
-  chart: any;
+  charts: any[] = [];
   isLoading = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.fetchDataAndCreateChart();
+    this.fetchDataAndCreateCharts();
   }
 
   refreshData() {
     this.isLoading = true;
-    this.fetchDataAndCreateChart();
+    this.fetchDataAndCreateCharts();
   }
 
-  fetchDataAndCreateChart() {
+  fetchDataAndCreateCharts() {
     this.http.get('http://localhost:8080/api/logs').subscribe({
       next: (data: any) => {
-        this.createChart(data);
+        this.createCharts(data);
         this.isLoading = false;
       },
       error: (error) => {
@@ -35,13 +35,12 @@ export class HomepageComponent implements OnInit {
     });
   }
 
-  createChart(data: any) {
-    // Destroy existing chart if it exists
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  createCharts(data: any) {
+    // Destroy existing charts if they exist
+    this.charts.forEach((chart) => chart.destroy());
+    this.charts = [];
 
-    // Process data for the histogram
+    // Process data for the histograms
     const timestamps = data.map((log: any) =>
       new Date(log.timestamp).getHours()
     );
@@ -50,37 +49,57 @@ export class HomepageComponent implements OnInit {
       hourCounts[hour]++;
     });
 
-    // Get the canvas element
-    const canvas = document.getElementById('logChart') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
-
-    if (ctx) {
-      this.chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
-          datasets: [
-            {
-              label: 'Log Entries per Hour',
-              data: hourCounts,
-              backgroundColor: 'rgba(76, 175, 80, 0.5)',
-              borderColor: 'rgba(76, 175, 80, 1)',
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                stepSize: 1,
-              },
-            },
+    // Create first chart
+    const ctx1 = document.getElementById('logChart1') as HTMLCanvasElement;
+    const chart1 = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+        datasets: [
+          {
+            label: 'Logs per Hour',
+            data: hourCounts,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
           },
         },
-      });
-    }
+      },
+    });
+    this.charts.push(chart1);
+
+    // Create additional charts as needed
+    // Example: Create a second chart
+    const ctx2 = document.getElementById('logChart2') as HTMLCanvasElement;
+    const chart2 = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+        datasets: [
+          {
+            label: 'Logs per Hour (Line)',
+            data: hourCounts,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+    this.charts.push(chart2);
   }
 }
