@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Chart } from 'chart.js';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement, PointElement, ArcElement, BarController, LineController } from 'chart.js'; // <-- Add these imports
+
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement, PointElement, ArcElement, BarController, LineController); // <-- Register them
+
 
 @Component({
   selector: 'app-homepage',
@@ -23,8 +26,9 @@ export class HomepageComponent implements OnInit {
   }
 
   fetchDataAndCreateCharts() {
-    this.http.get('http://localhost:8080/api/logs').subscribe({
+    this.http.get('http://localhost:9000/api/logs').subscribe({
       next: (data: any) => {
+        console.log('Fetched data:', data);
         this.createCharts(data);
         this.isLoading = false;
       },
@@ -34,6 +38,8 @@ export class HomepageComponent implements OnInit {
       },
     });
   }
+
+
 
   createCharts(data: any) {
     // Destroy existing charts if they exist
@@ -49,6 +55,24 @@ export class HomepageComponent implements OnInit {
       hourCounts[hour]++;
     });
 
+    // Process data for the histograms
+    const searchedTimestamps = data
+      .filter((log: any) => log.requestType === 'Searched')
+      .map((log: any) => new Date(log.timestamp).getHours());
+    const soldTimestamps = data
+      .filter((log: any) => log.requestType === 'Sold')
+      .map((log: any) => new Date(log.timestamp).getHours());
+
+    const searchedHourCounts = new Array(24).fill(0);
+    const soldHourCounts = new Array(24).fill(0);
+
+    searchedTimestamps.forEach((hour: number) => {
+      searchedHourCounts[hour]++;
+    });
+    soldTimestamps.forEach((hour: number) => {
+      soldHourCounts[hour]++;
+    });
+
     // Create first chart
     const ctx1 = document.getElementById('logChart1') as HTMLCanvasElement;
     const chart1 = new Chart(ctx1, {
@@ -57,8 +81,8 @@ export class HomepageComponent implements OnInit {
         labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
         datasets: [
           {
-            label: 'Logs per Hour',
-            data: hourCounts,
+            label: 'Api Calls',
+            data: searchedHourCounts,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
@@ -72,6 +96,18 @@ export class HomepageComponent implements OnInit {
           },
         },
       },
+      plugins: [
+        {
+          id: 'backgroundColor', // A unique identifier for your custom plugin
+          beforeDraw: (chart) => {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.fillStyle = 'rgba(50, 50, 50, 1)'; // Set the background color
+            ctx.fillRect(0, 0, width, height); // Fill the entire canvas
+            ctx.restore();
+          },
+        },
+      ],
     });
     this.charts.push(chart1);
 
@@ -84,12 +120,19 @@ export class HomepageComponent implements OnInit {
         labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
         datasets: [
           {
-            label: 'Logs per Hour (Line)',
-            data: hourCounts,
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
+            label: 'Searched Items',
+            data: searchedHourCounts,
+            backgroundColor: 'rgba(0, 255, 230, 0.2)',
+            borderColor: 'rgba(0, 255, 230, 1)',
             borderWidth: 1,
           },
+          {
+            label: 'Sold Items',
+            data: soldHourCounts,
+            backgroundColor: 'rgba(222, 0, 255, 0.2)',
+            borderColor: 'rgba(222, 0, 255, 1)',
+            borderWidth: 1,
+          }
         ],
       },
       options: {
@@ -99,6 +142,18 @@ export class HomepageComponent implements OnInit {
           },
         },
       },
+      plugins: [
+        {
+          id: 'backgroundColor', // A unique identifier for your custom plugin
+          beforeDraw: (chart) => {
+            const { ctx, width, height } = chart;
+            ctx.save();
+            ctx.fillStyle = 'rgba(50, 50, 50, 1)'; // Set the background color
+            ctx.fillRect(0, 0, width, height); // Fill the entire canvas
+            ctx.restore();
+          },
+        },
+      ],
     });
     this.charts.push(chart2);
   }

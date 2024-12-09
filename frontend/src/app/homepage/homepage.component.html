@@ -1,6 +1,6 @@
 <div class="dashboard-container">
-  <div class="dashboard-header">
-    <h1>Log Data Dashboard</h1>
+  <div class="dashboard-header" align="center">
+    <h1>Logs Charts</h1>
     <button
       class="refresh-button"
       (click)="refreshData()"
@@ -9,10 +9,13 @@
       <span class="refresh-icon" [class.spinning]="isLoading">↻</span>
       Refresh Data
     </button>
+    <hr>
   </div>
   <div class="chart-container">
-    <canvas id="logChart1"></canvas>
+    <h2>Sold And Searched Items Per Hour</h2>
     <canvas id="logChart2"></canvas>
+    <h2>Logs Per Hour</h2>
+    <canvas id="logChart1"></canvas>
     <!-- Add more canvas elements for additional charts -->
   </div>
 </div>
