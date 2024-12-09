@@ -131,7 +131,7 @@
   - Microservizio per la gestione degli ordini, con integrazione con il servizio Catalog per la disponibilità dei prodotti.
 - [Catalog](#catalog): 
   - Microservizio per la gestione dei prodotti, inclusi elenchi, creazione, aggiornamento e ricerca avanzata.
-- [ApiCallSimulator](#api-call-simulator): 
+- [ApiCallSimulator](#api-call-simulator): (**NEW!**)
   - Simula richieste al Catalog e agli ordini per testare il comportamento dei microservizi sotto carico.
 
 
