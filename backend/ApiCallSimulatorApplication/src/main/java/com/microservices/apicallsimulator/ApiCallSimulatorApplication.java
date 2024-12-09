@@ -30,7 +30,7 @@ public class ApiCallSimulatorApplication {
         return args -> {
             // This code runs after the Spring context is fully initialized
             ApiCallService simulator = new ApiCallService(catalogUrl, purchaseUrl);
-            simulator.startSimulation(1, TimeUnit.MINUTES);
+            simulator.startSimulation(2, TimeUnit.HOURS);
         };
     }
 }

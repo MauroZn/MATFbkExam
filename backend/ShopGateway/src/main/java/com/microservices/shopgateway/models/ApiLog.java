@@ -14,13 +14,10 @@ public class ApiLog {
 
     @Id
     private String id;
-    //Two types:
-    //Searched (When the user asks the info of an item)
-    //Sold (When an user buys an item)
     private String requestType;
     private int statusCode;
     private long responseTime;
-    private final LocalDateTime timestamp;
+    private LocalDateTime timestamp;
 
     public ApiLog() {
         this.timestamp = LocalDateTime.now();
