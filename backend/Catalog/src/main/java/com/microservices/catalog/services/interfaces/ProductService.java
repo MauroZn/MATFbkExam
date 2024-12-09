@@ -5,20 +5,32 @@ import com.microservices.catalog.models.Product;
 import java.util.List;
 import java.util.Optional;
 
-//List products: /api/products
-//Get product by Id: /api/products/{id}
-//Search by category: /api/products/category/{category}
-//Create product: POST /api/products
-//Change availability: PUT /api/products/{id}/availability/{value}
+// Interfaccia che definisce i metodi per la gestione dei prodotti
+// Le rotte documentate rappresentano le operazioni che questa interfaccia supporta
 
+// Elenco dei prodotti: GET /products
+// Ottenere un prodotto tramite ID: GET /products/{id}
+// Ricerca per categoria: GET /products/category/{category}
+// Creare un prodotto: POST /products
+// Modificare la disponibilità: PUT /products/{id}/availability/{value}
 
 public interface ProductService {
 
+    // Recupera la lista di tutti i prodotti
     List<Product> getProducts();
-    Optional<Product> getProductById(String id);
-    Optional<Product> getProductByCode(String code);
-    List<Product> getProductsByCategory(String category);
-    Product createProduct(Product product);
-    Product updateAvailability(String id, Integer availability);
 
+    // Recupera un prodotto tramite il suo ID
+    Optional<Product> getProductById(String id);
+
+    // Recupera un prodotto tramite il codice
+    Optional<Product> getProductByCode(String code);
+
+    // Recupera i prodotti filtrati per una categoria specifica
+    List<Product> getProductsByCategory(String category);
+
+    // Crea un nuovo prodotto
+    Product createProduct(Product product);
+
+    // Aggiorna la disponibilità di un prodotto specifico
+    Product updateAvailability(String id, Integer availability);
 }
