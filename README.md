@@ -100,6 +100,7 @@
             node --version
 
 - **Angular Versione 14.2.13** <br>
+    - ***Prima di tutto nel terminale spostatevi nella cartella FRONTEND del progetto (MATFbkExam/frontend)***
     - Installazione Angular ([Guida](https://www.npmjs.com/package/@angular/cli/v/14.2.13)):
       #### 
             npm i @angular/cli@14.2.13
