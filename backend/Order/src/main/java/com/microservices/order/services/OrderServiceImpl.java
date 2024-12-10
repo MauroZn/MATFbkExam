@@ -15,14 +15,15 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service // Indica che questa classe è un servizio gestito da Spring
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
-    private final RestTemplate restTemplate;
-    private final FeignProductService feignProductService;
-    private final CircuitBreakerFactory circuitBreakerFactory;
+    private final OrderRepository orderRepository; // Repository per la gestione degli ordini
+    private final RestTemplate restTemplate; // RestTemplate per le chiamate HTTP
+    private final FeignProductService feignProductService; // Client Feign per comunicare con il servizio "catalog"
+    private final CircuitBreakerFactory circuitBreakerFactory; // Gestione del Circuit Breaker
 
+    // Costruttore con iniezione delle dipendenze
     public OrderServiceImpl(OrderRepository orderRepository,
                             RestTemplate restTemplate,
                             FeignProductService feignProductService,
@@ -33,81 +34,49 @@ public class OrderServiceImpl implements OrderService {
         this.circuitBreakerFactory = circuitBreakerFactory;
     }
 
+    // Restituisce gli acquisti di un utente specifico
     @Override
     public List<Order> getUserPurchases(String userId) {
         return orderRepository.findByUserId(userId);
     }
 
+    // Restituisce i dettagli di un acquisto specifico per userId e id ordine
     @Override
     public Optional<Order> getPurchase(String userId, String id) {
         return orderRepository.findByUserIdAndId(userId, id);
     }
 
+    // Metodo per effettuare un acquisto
     @Override
     public Optional<Order> buy(String userId, Integer count, String productId) {
 
-        /*CircuitBreaker circuitBreaker = circuitBreakerFactory
-                .create("product-service-circuit-breaker");*/
-
-//        RestTemplate way
-//
-        /*Optional<Product> product =
-                Optional.ofNullable(restTemplate.getForObject(
-                        "http://catalog/api/products/{productId}",
-                        Product.class,
-                        productId));*/
-
-//      Feign Way + CircuitBreaker
-
+        // Recupera il prodotto dal servizio "catalog" tramite Feign
         Optional<Product> product = Optional.ofNullable(feignProductService.getProduct(productId));
 
-        /*Optional<Product> product =
-                Optional.ofNullable(
-                        circuitBreaker.run(
-                                () -> {
-                                    // Call catalog service
-                                    return feignProductService
-                                            .getProduct(productId);
-                                },
-                                throwable -> {
-                                    // return something
-                                    throw new RuntimeException("Product Service Not available");
-                                }
-                        )
-                );*/
-
-        // 1. check disponibilita'
+        // Verifica la disponibilità del prodotto
         return product.map(p -> {
             if (p.getAvailability() >= count) {
+                // Crea un nuovo ordine
                 Order newOrder = new Order();
                 newOrder.setUserId(userId);
                 newOrder.setProductId(productId);
                 newOrder.setProductTitle(p.getTitle());
                 newOrder.setProductCategory(p.getCategory());
-                newOrder.setPrice(p.getPrice() * count);
+                newOrder.setPrice(p.getPrice() * count); // Calcola il prezzo totale
                 newOrder.setQuantity(count);
 
-                // 2. Save the order
+                // Salva l'ordine nel database
                 Order order = orderRepository.save(newOrder);
 
-                // 3. Update product availability
-                // RestTemplate way
-                /*restTemplate.exchange(
-                        "http://catalog/api/products/{productId}/availability/{quantity}",
-                        HttpMethod.PUT,
-                        null,
-                        Product.class,
-                        productId,
-                        p.getAvailability() - count).getBody();*/
-
-
+                // Aggiorna la disponibilità del prodotto
                 feignProductService.updateProductAvailability(
                         productId,
                         p.getAvailability() - count);
 
-                // 4. return the order
+                // Restituisce l'ordine appena creato
                 return order;
             }
+            // Lancia un'eccezione se il prodotto non è disponibile
             throw new RuntimeException("Product not available");
         });
     }

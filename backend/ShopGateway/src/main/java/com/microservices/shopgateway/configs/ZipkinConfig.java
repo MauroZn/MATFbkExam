@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
+//IGNORATELO non è usato e non è richiesto
 public class ZipkinConfig extends AbstractMongoClientConfiguration {
 
     @Value("${spring.data.mongodb.uri}")

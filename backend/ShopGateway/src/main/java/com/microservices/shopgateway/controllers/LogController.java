@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController // Annota la classe come un controller REST
+@RequestMapping("/api") // Definisce il prefisso per tutti gli endpoint del controller
+@CrossOrigin(origins = "http://localhost:4200") // Permette le richieste cross-origin dal frontend che gira su localhost:4200
 public class LogController {
 
-    @Autowired
+    @Autowired // Inietta automaticamente un'istanza di MongoTemplate per l'accesso al database MongoDB
     private MongoTemplate mongoTemplate;
 
+    // Endpoint GET per ottenere tutti i log memorizzati nel database
     @GetMapping("/logs")
     public List<ApiLog> getLogs() {
+        // Recupera tutti i log dalla collezione ApiLog nel database MongoDB
         return mongoTemplate.findAll(ApiLog.class);
     }
 

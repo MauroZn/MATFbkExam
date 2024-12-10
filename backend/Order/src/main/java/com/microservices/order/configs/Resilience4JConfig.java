@@ -10,23 +10,27 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
-@Configuration
+@Configuration // Indica che questa classe è una configurazione di Spring
 public class Resilience4JConfig {
 
-    @Bean
+    @Bean // Definisce un bean per configurare il circuito di resilienza
     public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
+        // Configurazione del Circuit Breaker
         var circuitBreakerConfig = CircuitBreakerConfig.custom()
-                .failureRateThreshold(50)
-                .waitDurationInOpenState(Duration.ofMillis(1000))
-                .slidingWindowSize(2)
-                .build();
-        var timeLimiterConfig = TimeLimiterConfig.custom()
-                .timeoutDuration(Duration.ofSeconds(4))
+                .failureRateThreshold(50) // Soglia di errore: 50% delle richieste devono fallire per aprire il circuito
+                .waitDurationInOpenState(Duration.ofMillis(1000)) // Durata dello stato aperto: 1 secondo
+                .slidingWindowSize(2) // Dimensione della finestra di scorrimento: 2 richieste
                 .build();
 
+        // Configurazione del Time Limiter
+        var timeLimiterConfig = TimeLimiterConfig.custom()
+                .timeoutDuration(Duration.ofSeconds(4)) // Timeout massimo per una richiesta: 4 secondi
+                .build();
+
+        // Configurazione di default per tutti i circuit breaker
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-                .circuitBreakerConfig(circuitBreakerConfig)
-                .timeLimiterConfig(timeLimiterConfig)
+                .circuitBreakerConfig(circuitBreakerConfig) // Applica la configurazione del Circuit Breaker
+                .timeLimiterConfig(timeLimiterConfig) // Applica la configurazione del Time Limiter
                 .build());
     }
 }
